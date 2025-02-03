@@ -1,0 +1,51 @@
+@import url("https://fonts.googleapis.com/css2?family=Bebas+Neue&family=DM+Sans:wght@400;500;700;900&display=swap");
+
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  margin: 0;
+  padding: 0;
+  font-family: "Roboto", sans-serif;
+  letter-spacing: 0.1em;
+  word-spacing: 0.1em;
+}
+
+.dark{
+  --background-color: 3, 7, 18;
+  --nav-color: 10, 10, 10;
+  --search-color:3, 7, 18;
+  --primary: 59,130,246;
+  --primary-hover: 29 , 78, 216;
+  --secondary: 220 , 38 , 38;
+  --secondary-hover: 185, 28, 28;
+  --main-color:171,171,171;
+  --main-color-hover:236,236,236;
+  --underline-color:236,236,236;
+  --title-color:185,185,185;
+  --error:220,38,38;
+  --form-color:17 24 39 / 0.8 ;
+  --input-color:107, 114, 128;
+  --input-text-color:236, 236, 236;
+  --placeholder-color:236,236,236;
+}
+.light{
+  --background-color: 249,249,249;
+  --nav-color: 224, 224, 224;
+  --search-color:218, 218, 218;
+  --primary: 59,130,246;
+  --primary-hover: 29 , 78, 216;
+  --secondary: 220 , 38 , 38;
+  --secondary-hover: 185, 28, 28;
+  --main-color:97,97,97;
+  --main-color-hover:36,36,36;
+  --underline-color:36,36,36;
+  --title-color:75,75,75;
+  --error:220,38,38;
+  --form-color:230, 230, 230 , 0.8 ;
+  --input-color:180, 180, 180;
+  --input-text-color:50, 50, 50;
+  --placeholder-color:97,97,97;
+}

@@ -16,9 +16,6 @@ const AuthLayout = ()=> {
         <ChangeTheme/>
       </div>
         <div className='flex flex-col items-center justify-center '>
-          <div className='text-6xl mb-2'>
-            <Logo />
-          </div>
             <Outlet/>
           </div>
           </div>

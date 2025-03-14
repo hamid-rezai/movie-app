@@ -7,83 +7,71 @@ import MainLayout from "./layouts/mainLayout/mainLayout";
 import { AuthContextProvider } from "./contexts/authContext";
 import SignUp from "./features/identity/components/signup";
 import { useEffect } from "react";
-import { onAuthStateChanged } from "firebase/auth";
-import { auth } from "./core/firebase";
-import { useState } from "react";
-import { ToastContainer, toast } from 'react-toastify';
+import { ToastContainer } from "react-toastify";
 import Spinner from "./components/spinner";
-import { LoadingProvider, useLoading } from "./contexts/loadingContext";
+import {  useLoading } from "./contexts/loadingContext";
 import MoviePlayer from "./pages/movie-details";
+import { UserAuthContext } from "./contexts/authContext";
 import Movies from "./pages/movies";
 import TvShows from "./pages/tv-shows";
 import NewAndPopular from "./pages/new&popular";
+import MyList from "./pages/my-list";
+import WatchLater from "./pages/watch-later";
+import MyFavorite from "./pages/my-favorite";
+import TvShowDetails from "./pages/tv-shows-details";
+import MySearch from "./pages/mySearch";
+import { useTheme } from "./contexts/themeContext";
 
 function App() {
-
   const navigate = useNavigate();
-  const [authStatus , setAuthStatus] = useState("loading");
   const location = useLocation();
-  const {isLoading , setIsLoading} = useLoading();
+  const { isLoading, setIsLoading } = useLoading();
+  const { user, authIsReady } = UserAuthContext();
+  const {theme} = useTheme();
 
-  useEffect(()=>{
-    
-    const unsubscribe = onAuthStateChanged(auth, (user)=>{
-      if(user){
-        console.log('Logged In');
-        setAuthStatus('loggedIn');
-        if(location.pathname === '/login' || location.pathname === '/signup'){
-          navigate('/');
+  useEffect(() => {
+    if (authIsReady) {
+      if (user) {
+        if (location.pathname === "/login" || location.pathname === "/signup") {
+          navigate("/");
         }
-      }else{
-        console.log('Logged Out');
-        setAuthStatus('loggedOut');
-        if(location.pathname ==="/"){
-
-          navigate('/login');
+      } else {
+        if (location.pathname === "/") {
+          navigate("/login");
         }
       }
-    })
-
-    const timer = setTimeout(() => {
-      setIsLoading(false);
-    }, 1000);
-
-    return () => {unsubscribe();
-      clearTimeout(timer);
     }
-  },[navigate , location.pathname,setIsLoading])
+  }, [authIsReady, user, location.pathname, navigate]);
 
-  if(authStatus === 'loading' || isLoading){
-    return <Spinner/>
+  if (!authIsReady || isLoading) {
+    return <Spinner />;
   }
   return (
-    
     <>
-    <ToastContainer theme="dark" position="top-center"/>
-    <AuthContextProvider>
-      <Routes>
+      <ToastContainer theme={theme === 'dark' ? 'dark' : 'light'} position='top-center' />
+      <AuthContextProvider>
+        <Routes>
+          <Route element={<MainLayout />}>
+            <Route path='/' element={<Home />} />
+            <Route path='/movies' element={<Movies />}></Route>
+            <Route path='/tv-shows' element={<TvShows />}></Route>
+            <Route path='/new&popular' element={<NewAndPopular />}></Route>
+          </Route>
 
-        <Route element={<MainLayout/>}>
-        <Route path="/" element={<Home/>} />
-        <Route path="/movies" element={<Movies/>}></Route>
-        <Route path="/tv-shows" element={<TvShows/>}></Route>
-        <Route path="/new&popular" element={<NewAndPopular/>}></Route>
-        </Route>
-        
+          <Route element={<AuthLayout />}>
+            <Route path='/login' element={<Login />} />
+            <Route path='/signup' element={<SignUp />} />
+          </Route>
 
-
-        <Route element={<AuthLayout/>}>
-        <Route path="/login" element={<Login/>}/>
-        <Route path="/signup" element={<SignUp/>}/>
-        </Route>
-
-        <Route path="/movie/:id" element={<MoviePlayer/>}></Route>
-        
-
-      </Routes>
-    </AuthContextProvider>
+          <Route path='/movie/:id' element={<MoviePlayer />}></Route>
+          <Route path='/tv-shows/:id' element={<TvShowDetails />}></Route>
+          <Route path='/my-list' element={<MyList />}></Route>
+          <Route path='/watch-later' element={<WatchLater />}></Route>
+          <Route path='/my-favorite' element={<MyFavorite />}></Route>
+          <Route path='/search' element={<MySearch />}></Route>
+        </Routes>
+      </AuthContextProvider>
     </>
-    
   );
 }
 

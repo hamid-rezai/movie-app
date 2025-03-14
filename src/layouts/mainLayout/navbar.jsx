@@ -5,7 +5,7 @@ import {
   TagOutlined,
   UnorderedListOutlined,
   UserOutlined,
-  ClockCircleOutlined
+  ClockCircleOutlined,
 } from "@ant-design/icons";
 import Logo from "../../components/logo";
 import { Tooltip } from "antd";
@@ -13,15 +13,16 @@ import Search from "../../components/search";
 import { useState } from "react";
 import ChangeTheme from "../../components/changeTheme";
 import { useTheme } from "../../contexts/themeContext";
-import { useNavigate } from "react-router";
+import { Link } from "react-router";
 import { useLocation } from "react-router";
+import { FiMenu, FiX } from "react-icons/fi";
+import { AnimatePresence, motion } from "framer-motion";
 
 const Navbar = ({ onLogoutClick }) => {
   const [tooltipVisible, setTooltipVisible] = useState(false);
+  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const { theme } = useTheme();
-  const navigate = useNavigate();
   const location = useLocation();
-
 
   const handleLogoutClick = () => {
     setTooltipVisible(false);
@@ -38,46 +39,106 @@ const Navbar = ({ onLogoutClick }) => {
 
   const isActive = (path) => location.pathname === path;
 
+  // Common nav links
+  const navLinks = (
+    <>
+      <Link
+        onClick={() => setMobileMenuOpen(false)}
+        to='/'
+        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 xl:m-6 ${
+          isActive("/")
+            ? "text-main-color-hover border-b-2"
+            : "border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"
+        } transition-all duration-300 outline-0`}
+        style={{
+          borderColor: isActive("/")
+            ? theme === "dark"
+              ? "rgb(236,236,236)"
+              : "rgb(36,36,36)"
+            : "",
+        }}>
+        <HomeOutlined className='mb-1 mr-1' /> Home
+      </Link>
+
+      <Link
+        onClick={() => setMobileMenuOpen(false)}
+        to='/movies'
+        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${
+          isActive("/movies")
+            ? "text-main-color-hover border-b-2"
+            : "border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"
+        } transition-all duration-300 outline-0`}
+        style={{
+          borderColor: isActive("/movies")
+            ? theme === "dark"
+              ? "rgb(236,236,236)"
+              : "rgb(36,36,36)"
+            : "",
+        }}>
+        <VideoCameraOutlined className='mr-1' /> Movies
+      </Link>
+
+      <Link
+        onClick={() => setMobileMenuOpen(false)}
+        to='/tv-shows'
+        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${
+          isActive("/tv-shows")
+            ? "text-main-color-hover border-b-2"
+            : "border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"
+        } transition-all duration-300 outline-0`}
+        style={{
+          borderColor: isActive("/tv-shows")
+            ? theme === "dark"
+              ? "rgb(236,236,236)"
+              : "rgb(36,36,36)"
+            : "",
+        }}>
+        <PlayCircleOutlined className='mr-1' /> Tv Shows
+      </Link>
+
+      <Link
+        onClick={() => setMobileMenuOpen(false)}
+        to='/new&popular'
+        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${
+          isActive("/new&popular")
+            ? "text-main-color-hover border-b-2"
+            : "border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"
+        } transition-all duration-300 outline-0`}
+        style={{
+          borderColor: isActive("/new&popular")
+            ? theme === "dark"
+              ? "rgb(236,236,236)"
+              : "rgb(36,36,36)"
+            : "",
+        }}>
+        <TagOutlined className='mr-1' style={{ fontSize: "20px" }} /> New &
+        Popular
+      </Link>
+    </>
+  );
+
   return (
     <nav
       className='flex flex-row items-center justify-between font-display 
          bg-navBack 
-       px-11 h-24'>
+       px-6 h-24 sm:px-11 md:px-16 lg:px-20 xl:px-24 2xl:px-32 relative'>
+      {/* Logo */}
       <div className=' text-5xl h-100 flex justify-center items-center'>
         <Logo />
       </div>
 
-      <div className=' flex items-center justify-center font-display text-[1.1rem] '>
-
-        <button
-        onClick={()=>navigate("/")}
-          className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${isActive("/") ? " text-main-color-hover border-main-color-hover": " border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"}transition-all duration-300 outline-0`}>
-          <HomeOutlined className='mb-1 mr-1' /> Home
-        </button>
-
-        <button
-        onClick={()=>navigate('/movies')}
-        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${isActive("/movies") ? "text-main-color-hover border-main-color-hover": " border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"}transition-all duration-300 outline-0`}>
-          <VideoCameraOutlined className='mr-1' /> Movies
-        </button>
-
-        <button
-        onClick={()=>navigate('/tv-shows')}
-        className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${isActive("/tv-shows") ? "text-main-color-hover border-main-color-hover": " border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"}transition-all duration-300 outline-0`}>
-          <PlayCircleOutlined className='mr-1' /> Tv Shows
-        </button>
-
-        <button
-        onClick={()=>navigate('/new&popular')}
-          className={`font-display bg-transparent border-b-2 flex items-center ml-1 mr-6 ${isActive("/new&popular") ? "text-main-color-hover border-main-color-hover": " border-transparent text-main-color hover:text-main-color-hover hover:border-main-color-hover hover:border-b-2"}transition-all duration-300 outline-0`}>
-          <TagOutlined className='mr-1' style={{ fontSize: "20px " }} /> New &
-          Popular
-        </button>
+      {/* Desktop Navigation */}
+      <div className='hidden xl:flex items-center justify-center text-[1rem]'>
+        {navLinks}
       </div>
 
-      <Search />
+      {/* Search Component(visible on Desktop) */}
+      <div className='hidden xl:block'>
+        <Search type='movie' />
+      </div>
 
-      <div className='relative'>
+      {/* User actions */}
+      <div className=' flex items-center gap-6 xl:m-8'>
         <Tooltip
           arrow={false}
           color={tooltipChangeColor(theme)}
@@ -91,21 +152,24 @@ const Navbar = ({ onLogoutClick }) => {
           }}
           title={
             <div className='flex flex-col items-center text-center w-full px-4 py-4 bg-navBack border-1 border-gray-600 rounded-lg overflow-hidden'>
-              <a
-                className= 'w-full text-main-color hover:text-main-color-hover flex items-center cursor-pointer text-base mb-4'>
+              <Link
+                to={"/my-list"}
+                className='w-full text-main-color hover:text-main-color-hover flex items-center cursor-pointer text-base mb-4'>
                 <UnorderedListOutlined className='w-7 h-7 flex items-center' />{" "}
                 My List
-              </a>
-              <a
-                className= 'w-full text-main-color hover:text-main-color-hover flex items-center cursor-pointer text-base mb-4'>
-                <ClockCircleOutlined  className='w-7 h-7 flex items-center' />{" "}
+              </Link>
+              <Link
+                to={"/watch-later"}
+                className='w-full text-main-color hover:text-main-color-hover flex items-center cursor-pointer text-base mb-4'>
+                <ClockCircleOutlined className='w-7 h-7 flex items-center' />{" "}
                 Watch Later
-              </a>
-              <a
+              </Link>
+              <Link
+                to={"/my-favorite"}
                 className='w-full text-main-color hover:text-main-color-hover flex items-center cursor-pointer text-base mb-4'>
                 <UnorderedListOutlined className='w-7 h-7 flex items-center ' />{" "}
                 My Favorite
-              </a>
+              </Link>
 
               <a
                 onClick={handleLogoutClick}
@@ -136,16 +200,62 @@ const Navbar = ({ onLogoutClick }) => {
             type='text'
             className='flex items-center justify-center text-main-color hover:text-main-color-hover transform active:scale-110 transition-transform duration-200 cursor-pointer '
             onClick={() => setTooltipVisible(!tooltipVisible)}>
-            <UserOutlined
-              className='text-3xl text-main-color hover:text-main-color-hover'
-            />
+            <UserOutlined className='text-3xl text-main-color hover:text-main-color-hover' />
           </p>
         </Tooltip>
+
+        {/* Change theme */}
+        <div className=' flex items-center justify-center mt-1'>
+          <ChangeTheme />
+        </div>
+
+        {/* Hamburger Icon for mobile */}
+        <div className='xl:hidden flex items-center justify-center relative w-12 h-12'>
+          <AnimatePresence exitBeforeEnter>
+            {mobileMenuOpen ? (
+              <motion.div
+                key='closeIcon'
+                onClick={() => setMobileMenuOpen(false)}
+                className='absolute inset-0 flex items-center justify-center cursor-pointer'
+                initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
+                transition={{ duration: 0.3 }}>
+                <FiX className='text-3xl text-main-color hover:text-main-color-hover cursor-pointer transition-all duration-300' />
+              </motion.div>
+            ) : (
+              <motion.div
+                key='menuIcon'
+                onClick={() => setMobileMenuOpen(true)}
+                className='absolute inset-0 flex items-center justify-center cursor-pointer'
+                initial={{ opacity: 0, scale: 0.8, rotate: -90 }}
+                animate={{ opacity: 1, scale: 1, rotate: 0 }}
+                exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
+                transition={{ duration: 0.3 }}>
+                <FiMenu
+                  className='text-3xl text-main-color hover:text-main-color-hover cursor-pointer'
+                  onClick={() => setMobileMenuOpen(true)}
+                />
+              </motion.div>
+            )}
+          </AnimatePresence>
+        </div>
       </div>
 
-      <div className=' flex items-center justify-center mt-1'>
-        <ChangeTheme />
-      </div>
+      {/* Mobile Navigation Menu*/}
+      {mobileMenuOpen && (
+        <AnimatePresence>
+          <motion.div
+            className='xl:hidden absolute top-24 left-0 w-full bg-navBack z-50 p-6 flex flex-col space-y-4'
+            initial={{ opacity: 0, y: -20 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -20 }}
+            transition={{ duration: 0.3 }}>
+            {navLinks}
+            <Search className='' type='movie' />
+          </motion.div>
+        </AnimatePresence>
+      )}
     </nav>
   );
 };

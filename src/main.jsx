@@ -4,8 +4,10 @@ import App from './App.jsx'
 import { BrowserRouter } from 'react-router-dom'
 import { LoadingProvider } from './contexts/loadingContext.jsx'
 import { ThemeProvider } from './contexts/themeContext.jsx'
+import { AuthContextProvider } from './contexts/authContext.jsx'
 
 createRoot(document.getElementById('root')).render(
+    <AuthContextProvider>
     <LoadingProvider>
     <ThemeProvider>
     <BrowserRouter>
@@ -13,4 +15,5 @@ createRoot(document.getElementById('root')).render(
     </BrowserRouter>
     </ThemeProvider>
     </LoadingProvider>
+    </AuthContextProvider>
 )

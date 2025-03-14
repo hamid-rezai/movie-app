@@ -30,6 +30,9 @@ body {
   --input-color:107, 114, 128;
   --input-text-color:236, 236, 236;
   --placeholder-color:236,236,236;
+  --movie-card:31, 41, 55;
+  --pg-back : 175 , 175 , 175 ;
+  --pg-text-color:55,55,55;
 }
 .light{
   --background-color: 249,249,249;
@@ -45,7 +48,11 @@ body {
   --title-color:75,75,75;
   --error:220,38,38;
   --form-color:230, 230, 230 , 0.8 ;
-  --input-color:180, 180, 180;
+  --input-color:200, 200, 200;
   --input-text-color:50, 50, 50;
   --placeholder-color:97,97,97;
+  --movie-card:250, 250, 250;
+  --pg-back : 55 , 55 , 55 ;
+  --pg-text-color:175,175,175;
+
 }

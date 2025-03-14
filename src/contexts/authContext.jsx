@@ -1,26 +1,39 @@
-import { createContext, useContext, useState } from "react";
+import { createContext, useContext, useEffect, useState } from "react";
 import {
   createUserWithEmailAndPassword,
+  onAuthStateChanged,
   signInWithEmailAndPassword,
   signOut,
 } from "firebase/auth";
 import { auth, db } from "../core/firebase";
-import { addDoc, collection } from "firebase/firestore";
+import {  doc, setDoc } from "firebase/firestore";
 import { toast } from "react-toastify";
 
 const AuthContext = createContext();
 
 export function AuthContextProvider({ children }) {
-  const [user, setUser] = useState({});
+  const [user, setUser] = useState(null);
+  const [authIsReady, setAuthIsReady] = useState(false);
+
+  useEffect(()=>{
+    const unsubscribe = onAuthStateChanged(auth , (currentUser)=>{
+      setUser(currentUser);
+      setAuthIsReady(true);
+    })
+    return unsubscribe;
+  } , [])
 
   const signUp = async (email, password) => {
     try {
       const res = await createUserWithEmailAndPassword(auth, email, password);
       setUser(res.user);
       console.log(res.user.uid, email);
-      await addDoc(collection(db, "user"), {
+      await setDoc(doc(db, "user" , res.user.uid), {
         uid: res.user.uid,
-        email,
+        email:email,
+        favorites: [],
+        my_list:[],
+        watch_later:[],
         createdAt: new Date(),
       });
       toast.success("User created successfully");
@@ -44,7 +57,7 @@ export function AuthContextProvider({ children }) {
   };
 
   return (
-    <AuthContext.Provider value={{ user, signUp, logIn, logOut }}>
+    <AuthContext.Provider value={{ user, signUp, logIn, logOut , authIsReady }}>
       {children}
     </AuthContext.Provider>
   );

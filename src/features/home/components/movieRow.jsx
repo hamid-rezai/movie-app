@@ -1,8 +1,8 @@
 import { useEffect, useState } from "react";
 import { httpService } from "../../../core/http-service";
-import MovieItem from "./movieItem";
 import { useTheme } from "../../../contexts/themeContext";
 import { MdChevronLeft, MdChevronRight } from "react-icons/md";
+import MovieCard from "../../movies/movie-card";
 
 const MovieRow = ({ title, url }) => {
   const [movies, setMovies] = useState([]);
@@ -25,7 +25,7 @@ const MovieRow = ({ title, url }) => {
 
   return (
     <div className='bg-navBack '>
-      <h2 className='font-sans-bold md:text-xl text-main-color p-4 capitalize'>
+      <h2 className='font-sans-bold text-lg sm:text-xl text-main-color p-4 capitalize'>
         {title}
       </h2>
 
@@ -33,7 +33,7 @@ const MovieRow = ({ title, url }) => {
         <div className='relative flex items-center outline-none '>
           {movies.length > 3 && (
             <MdChevronLeft
-              className='bg-white rounded-full absolute left-2 opacity-80 text-gray-700 z-10  block cursor-pointer'
+              className='bg-white rounded-full absolute left-2 opacity-80 text-gray-700 z-10  sm:block cursor-pointer'
               size={40}
               onClick={() => slide(-500)}
             />
@@ -41,15 +41,15 @@ const MovieRow = ({ title, url }) => {
 
           <div
             id={`slider` + rowId}
-            className='w-full h-full overflow-x-scroll whitespace-nowrap scroll-smooth scrollbar-hide'>
+            className='w-full h-full scroll-smooth scrollbar-hide flex overflow-x-scroll whitespace-nowrap gap-4 sm:gap-6 md:gap-7 px-4 py-6'>
             {movies.map((movie) => (
-              <MovieItem key={movie.id} movie={movie} id={movie.id} />
+              <MovieCard key={movie.id} movies={movie} id={movie.id} />
             ))}
           </div>
 
           {movies.length > 3 && (
             <MdChevronRight
-              className='bg-white rounded-full absolute right-2 opacity-80 text-gray-700 z-10 block cursor-pointer'
+              className='bg-white rounded-full absolute right-2 opacity-80 text-gray-700 z-10 sm:block cursor-pointer'
               size={40}
               onClick={() => slide(500)}
             />

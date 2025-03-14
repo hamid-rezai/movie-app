@@ -2,6 +2,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { useForm } from "react-hook-form";
 import { UserAuthContext } from "../../../contexts/authContext";
 import ButtonSpinner from "../../../components/button-spinner";
+import Logo from "../../../components/logo";
 
 const Login = () => {
   const {
@@ -10,7 +11,7 @@ const Login = () => {
     formState: { errors, isSubmitting },
   } = useForm();
 
-  const { user, logIn } = UserAuthContext();
+  const { logIn } = UserAuthContext();
   const navigate = useNavigate();
   
 
@@ -26,25 +27,27 @@ const Login = () => {
   };
 
   return (
-    <>
-      <h2 className='my-1 font-bold text-2xl text-main-color' >
+    <div className="flex flex-col items-center justify-center min-h-screen px-4">
+      <div className="mb-4 text-5xl sm:text-7xl text-center">
+        <Logo/>
+      </div>
+      <h2 className='mb-2 font-bold text-2xl text-main-color text-center' >
         {" "}
         Online Movie Platform
       </h2>
-      <p className=' text-xl mb-4 text-main-color'>
+      <p className=' text-xl mb-4 text-main-color text-center'>
         To log in, you need to use your email and password
       </p>
-      <p className='text-main-color mb-5'>
+      <p className='text-main-color mb-5 text-center'>
         New to FlickZone ?{" "}
-        <Link to='/signup' className='text-primary hover:text-primary-hover outline-none border-none'>
+        <Link to='/signup' className='text-primary hover:text-primary-hover outline-none border-none ml-1'>
           {" "}
           Sign up{" "}
         </Link>{" "}
       </p>
-      <div className='bg-form-color p-10 rounded-lg w-full shadow-lg max-w-md '>
-        <div className='relative flex flex-col min-w-0 '>
+      <div className='bg-form-color p-6 md:p-10 rounded-lg w-full shadow-lg max-w-md '>
           <form onSubmit={handleSubmit(onSubmit)} noValidate>
-            <div className='w-100 flex flex-col'>
+            <div className=' flex flex-col '>
               <div className='mb-6'>
                 <input
                   {...register("email", {
@@ -62,7 +65,7 @@ const Login = () => {
                   }`}
                 />
                 {errors.email && errors.email.type === "required" && (
-                  <p className='text-error font-bold mt-0.5'>
+                  <p className='text-error font-bold mt-1'>
                     {errors.email.message}
                   </p>
                 )}
@@ -79,7 +82,7 @@ const Login = () => {
                   })}
                   type='password'
                   placeholder='Password'
-                  className={`w-full p-3 mb-1 rounded-lg bg-input-color  placeholder:text-placeholder-color focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none  text-input-text-color transition duration-300 ease-in-out mt-2 ${
+                  className={`w-full p-3 rounded-lg bg-input-color  placeholder:text-placeholder-color focus:border-blue-500 focus:ring-2 focus:ring-blue-500 outline-none  text-input-text-color transition duration-300 ease-in-out mt-2 ${
                     errors.password &&
                     " border-2 border-red-500 "
                   }`}
@@ -99,9 +102,9 @@ const Login = () => {
               </button>
             </div>
           </form>
-        </div>
+        
       </div>
-    </>
+    </div>
   );
 };
 export default Login;

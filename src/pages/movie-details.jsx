@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BackButton from "../components/backButton";
-import { Link, useParams } from "react-router";
+import { Link, useNavigate, useParams } from "react-router";
 import { httpService, key } from "../core/http-service";
 import Spinner from "../components/spinner";
 import { PlayCircleFilled } from "@ant-design/icons";
@@ -14,6 +14,7 @@ const MoviePlayer = () => {
   const [showVideo, setShowVideo] = useState(false);
   const {theme}=useTheme();
   const { id } = useParams();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchMovieDetails = async () => {
@@ -50,9 +51,9 @@ const MoviePlayer = () => {
   }
 
   return (
-    <div className='relative bg-navBack text-main-color w-screen h-screen'>
+    <div className='relative bg-navBack text-main-color w-screen min-h-screen'>
       <div
-        className='relative w-full h-2/3 bg-navBack overflow-hidden flex'
+        className='relative w-full h-[100vh] sm:h-[100vh] md:h-[60vh] lg:h-[70vh] bg-navBack overflow-hidden flex flex-col md:flex-row items-center justify-center'
         style={{
           backgroundImage: `url(https://image.tmdb.org/t/p/original${
             movie.backdrop_path || movie.poster_path || ""
@@ -62,30 +63,48 @@ const MoviePlayer = () => {
           backgroundPosition: "center",
         }}>
         <div className={`absolute inset-0 ${theme==='dark'?"bg-black": 'bg-purple-100'} opacity-80`}></div>
-        <div className='w-1/3 h-full relative'>
+
+        {/* Movie Image */}
+        <div className='w-full md:w-1/2 flex items-center justify-center relative p-4'>
           <Image
             backdrop_path={movie.backdrop_path}
             poster_path={movie.poster_path}
           />
         </div>
-        <div className='w-2/3 h-ful relative'>
-          <div className='flex z-10 p-10 text-main-color flex-col m-3'>
-            <h1 className='text-5xl pt-6 font-bold'>{movie.title}</h1>
-            <p className='text-lg pt-2'>{movie.release_date}</p>
-            <ul className='pt-2 flex space-x-4'>
+
+         {/* Movie Details */}
+         <div className="relative w-full md:w-1/2 flex items-center justify-center p-4">
+          <div className="text-center md:text-left">
+            <h1 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-bold mb-4">
+              {movie.title}
+            </h1>
+            <p className="text-base sm:text-lg md:text-xl lg:text-2xl mb-6 line-clamp-3">
+              {movie.overview}
+            </p>
+            <p className="text-sm sm:text-base font-light mb-4">
+              Release Date: {movie.release_date}
+            </p>
+            <ul className='pt-2 flex flex-wrap justify-center md:justify-start gap-2'>
               {movie.genres.map((genre) => (
-                <li key={genre.id}>{genre.name}</li>
+                <li key={genre.id} className="bg-main-color text-navBack rounded px-2 py-1">{genre.name}</li>
               ))}
             </ul>
             <p className='pt-2'> {movie.runtime} minutes</p>
             <p className='pt-2'>{movie.vote_average.toFixed(1)}/10</p>
-            <h1 className='text-xl pt-2'>Overview:</h1>
-            <p>{movie.overview}</p>
-            <p
-              onClick={() => setShowVideo(!showVideo)}
-              className='text-xl w-fit flex gap-2 py-5 text-main-color cursor-pointer hover:text-main-color-hover'>
-              <PlayCircleFilled /> Play Trailer
-            </p>
+            <div className="flex flex-col sm:flex-row items-center justify-center md:justify-start gap-4">
+              <button 
+                onClick={() => setShowVideo(true)}
+                className="px-4 mt-4 py-2 bg-secondary text-slate-100 text-lg font-semibold rounded-lg hover:bg-secondary-hover outline-none transition duration-300"
+              >
+                <span className="flex items-center gap-2">
+                  <PlayCircleFilled /> Watch Trailer
+                </span>
+              </button>
+              <button
+                onClick={() => setShowVideo(false)}
+                className="hidden"  /* Optional: Hide this button if not needed */
+              ></button>
+            </div>
           </div>
         </div>
       </div>
@@ -94,9 +113,9 @@ const MoviePlayer = () => {
         url={`https://api.themoviedb.org/3/movie/${id}/similar?api_key=${key}&language=en-US`}
       />
 
-      <Link className='absolute top-5 left-5 ' to={'/'}>
+      <div className='absolute top-5 left-5 ' onClick={()=>navigate(-1)}>
         <BackButton />
-      </Link>
+      </div>
 
       {showVideo && (
         <div className="fixed inset-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-lg z-50 flex items-center justify-center">

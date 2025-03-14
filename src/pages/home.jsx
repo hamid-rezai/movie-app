@@ -6,7 +6,7 @@ import MovieRow from "../features/home/components/movieRow";
 const Home = () => {
 
   return (
-    <div>
+    <div >
       
       <Hero/>
       <MovieRow title="Upcoming" url={endpoints.upcoming}/>
@@ -14,6 +14,8 @@ const Home = () => {
       <MovieRow title="Top rated" url={endpoints.topRated}/>
       <MovieRow title="Comedy" url={endpoints.comedy}/>
       <MovieRow title="Popular" url={endpoints.popular}/>
+
+      
     </div>
   );
 };

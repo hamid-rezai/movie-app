@@ -120,7 +120,7 @@ const MoviePlayer = () => {
       {showVideo && (
         <div className="fixed inset-0 w-full h-full bg-black bg-opacity-50 backdrop-blur-lg z-50 flex items-center justify-center">
 
-        <div className='fixed inset-0 w-[80%] h-[80%] bg-black bg-opacity-50 backdrop-blur-lg z-50 top-20 left-36 rounded-lg'>
+        <div className=' relative w-[80%] h-[80%] bg-black rounded-lg'>
           <button
             onClick={() => setShowVideo(false)}
             className='absolute top-0 right-0 text-white text-3xl font-bold p-2 rounded-lg bg-gray-800 hover:bg-gray-600 transition duration-300'>

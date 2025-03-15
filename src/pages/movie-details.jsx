@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import BackButton from "../components/backButton";
-import { Link, useNavigate, useParams } from "react-router";
+import { useNavigate, useParams } from "react-router";
 import { httpService, key } from "../core/http-service";
 import Spinner from "../components/spinner";
 import { PlayCircleFilled } from "@ant-design/icons";

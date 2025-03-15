@@ -51,9 +51,9 @@ const ChangeTheme = () => {
           className='flex items-center justify-center text-main-color hover:text-main-color-hover text-2xl transform active:scale-110 transition-transform duration-200 cursor-pointer'
           onClick={() => setIsThemeVisible(!isThemeVisible)}>
           {theme === "dark" ? (
-            <MoonFilled className='text-3xl text-main-color hover:text-main-color-hover' />
+            <MoonFilled className='text-2xl sm:text-3xl text-main-color hover:text-main-color-hover' />
           ) : (
-            <SunFilled className='text-3xl text-main-color hover:text-main-color-hover' />
+            <SunFilled className='text-2xl sm:text-3xl text-main-color hover:text-main-color-hover' />
           )}
         </p>
       </Tooltip>

@@ -120,10 +120,10 @@ const Navbar = ({ onLogoutClick }) => {
   return (
     <nav
       className='flex flex-row items-center justify-between font-display 
-         bg-navBack 
-       px-6 h-24 sm:px-11 md:px-16 lg:px-20 xl:px-24 2xl:px-32 relative'>
+         bg-navBack overflow-hidden 
+       px-4 h-24 sm:px-6 md:px-16 lg:px-20 xl:px-24 2xl:px-32 relative'>
       {/* Logo */}
-      <div className=' text-5xl h-100 flex justify-center items-center'>
+      <div className=' text-2xl sm:text-3xl lg:text-5xl flex justify-center items-center'>
         <Logo />
       </div>
 
@@ -138,7 +138,7 @@ const Navbar = ({ onLogoutClick }) => {
       </div>
 
       {/* User actions */}
-      <div className=' flex items-center gap-6 xl:m-8'>
+      <div className=' flex items-center gap-4 sm:gap-6 xl:m-8 '>
         <Tooltip
           arrow={false}
           color={tooltipChangeColor(theme)}
@@ -200,7 +200,7 @@ const Navbar = ({ onLogoutClick }) => {
             type='text'
             className='flex items-center justify-center text-main-color hover:text-main-color-hover transform active:scale-110 transition-transform duration-200 cursor-pointer '
             onClick={() => setTooltipVisible(!tooltipVisible)}>
-            <UserOutlined className='text-3xl text-main-color hover:text-main-color-hover' />
+            <UserOutlined className='text-2xl sm:text-3xl text-main-color hover:text-main-color-hover' />
           </p>
         </Tooltip>
 
@@ -210,7 +210,7 @@ const Navbar = ({ onLogoutClick }) => {
         </div>
 
         {/* Hamburger Icon for mobile */}
-        <div className='xl:hidden flex items-center justify-center relative w-12 h-12'>
+        <div className='xl:hidden flex items-center justify-center relative w-8 sm:w-12 h-8 sm:h-12'>
           <AnimatePresence exitBeforeEnter>
             {mobileMenuOpen ? (
               <motion.div
@@ -221,7 +221,7 @@ const Navbar = ({ onLogoutClick }) => {
                 animate={{ opacity: 1, scale: 1, rotate: 0 }}
                 exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
                 transition={{ duration: 0.3 }}>
-                <FiX className='text-3xl text-main-color hover:text-main-color-hover cursor-pointer transition-all duration-300' />
+                <FiX className='text-2xl sm:text-3xl text-main-color hover:text-main-color-hover cursor-pointer transition-all duration-300' />
               </motion.div>
             ) : (
               <motion.div
@@ -233,29 +233,17 @@ const Navbar = ({ onLogoutClick }) => {
                 exit={{ opacity: 0, scale: 0.8, rotate: 90 }}
                 transition={{ duration: 0.3 }}>
                 <FiMenu
-                  className='text-3xl text-main-color hover:text-main-color-hover cursor-pointer'
+                  className='text-2xl sm:text-3xl text-main-color hover:text-main-color-hover cursor-pointer'
                   onClick={() => setMobileMenuOpen(true)}
                 />
               </motion.div>
             )}
           </AnimatePresence>
         </div>
+        
       </div>
 
-      {/* Mobile Navigation Menu*/}
-      {mobileMenuOpen && (
-        <AnimatePresence>
-          <motion.div
-            className='xl:hidden absolute top-24 left-0 w-full bg-navBack z-50 p-6 flex flex-col space-y-4'
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -20 }}
-            transition={{ duration: 0.3 }}>
-            {navLinks}
-            <Search className='' type='movie' />
-          </motion.div>
-        </AnimatePresence>
-      )}
+      
     </nav>
   );
 };

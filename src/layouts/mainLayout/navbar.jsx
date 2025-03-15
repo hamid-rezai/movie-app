@@ -118,6 +118,7 @@ const Navbar = ({ onLogoutClick }) => {
   );
 
   return (
+    <>
     <nav
       className='flex flex-row items-center justify-between font-display 
          bg-navBack overflow-hidden 
@@ -239,12 +240,29 @@ const Navbar = ({ onLogoutClick }) => {
               </motion.div>
             )}
           </AnimatePresence>
+          
         </div>
+
         
       </div>
-
-      
+            
     </nav>
+
+    {/* Mobile Navigation Menu*/}
+    {mobileMenuOpen && (
+         <AnimatePresence>
+           <motion.div
+             className='xl:hidden absolute top-24 left-0 w-full bg-navBack z-50 p-6 flex flex-col space-y-4'
+             initial={{ opacity: 0, y: -20 }}
+             animate={{ opacity: 1, y: 0 }}
+             exit={{ opacity: 0, y: -20 }}
+             transition={{ duration: 0.3 }}>
+             {navLinks}
+             <Search className='' type='movie' />
+           </motion.div>
+         </AnimatePresence>
+       )} 
+    </>
   );
 };
 

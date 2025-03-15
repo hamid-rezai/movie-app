@@ -24,7 +24,7 @@ const MyFavorite = () => {
         <BackButton/>
       </div>
       <div className='w-full h-[300px] lg-h-[350px] bg-gradient-to-b from-navBack z-20 flex items-center justify-center gap-2'>
-        <h1 className='text-7xl flex items-center justify-center font-bold text-main-color uppercase h-full'>
+        <h1 className='text-5xl sm:text-7xl flex items-center justify-center font-bold text-main-color uppercase h-full'>
           <SplitText
             text='my favorite'
             className=' font-semibold text-center'
@@ -37,9 +37,9 @@ const MyFavorite = () => {
             onLetterAnimationComplete={handleAnimationComplete}
           />
         </h1>
-        <FaHeart className='text-main-color w-[55px] h-[55px]' />
+        <FaHeart className='text-main-color w-[40px] h-[40px] sm:w-[55px] sm:h-[55px]' />
       </div>
-      <div className='relative w-full h-full bg-navBack grid grid-cols-5 gap-7 p-4 justify-items-center'>
+      <div className='relative w-full h-full bg-navBack grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 xl:grid-cols-5 gap-7 p-4 justify-items-center'>
         {favorites.length > 0 ? (
           favorites.map((movie) => (
             <div
